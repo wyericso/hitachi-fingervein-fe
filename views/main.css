@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+#header-line {
+    height: 5px;
+    background-color: rgb(204, 8, 20);
+}
+
+header {
+    height: 40px;
+}
+
+#logo {
+    margin: 5px 15px;
+}
+
+nav {
+    float: right;
+    height: 20px;
+    margin-top: 20px;
+}
+
+ul {
+    display: inline;
+}
+
+li {
+    display: inline;
+    margin: 0 10px;
+}
+
+figure {
+    text-align: center;
+}
+
+#cover-img {
+    width: 100%;
+    max-width: 965px;
+}
+
+footer {
+    text-align: center;
+}
