@@ -5,24 +5,14 @@
     <title>Hitachi Finger Vein Device Front End Interface</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script type="text/babel" src="main.js"></script>
 </head>
 <body>
     <div id="header-line"></div>
-    <header>
-        <img id="logo" src="https://res.cloudinary.com/woooanet/image/upload/v1540199211/hitachi-fingervein-fe/hitachi-inspire-next-logo.png">
-        <nav>
-            <ul>
-                <li>Register</li>
-                <li>Login</li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <figure>
-            <img id="cover-img" src="https://res.cloudinary.com/woooanet/image/upload/v1540199193/hitachi-fingervein-fe/brandingimg_vid_e.jpg">
-        </figure>
-    </main>
+    <div id="container"></div>
     <footer>&copy; Hitachi Vantara 2018. All Rights Reserved.</footer>
 </body>
 </html>
