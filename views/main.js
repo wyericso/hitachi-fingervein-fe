@@ -1,16 +1,28 @@
 'use strict';
 
 const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
 
-const logIn = (loggedIn) => ({      // Redux action
+// Redux actions
+
+const logIn = (id) => ({
     type: LOGIN,
-    loggedIn
+    loggedInId: id
 });
 
-function fingerVeinAppReducer(state = { loggedIn: false }, action) {        // Redux reducer
+const logOut = () => ({
+    type: LOGOUT,
+    loggedInId: null
+});
+
+// Redux reducer
+
+function fingerVeinAppReducer(state = { loggedInId: null }, action) {
     switch (action.type) {
     case LOGIN:
-        return { loggedIn: action.loggedIn };
+        return { loggedInId: action.loggedInId };
+    case LOGOUT:
+        return { loggedInId: action.loggedInId };
     default:
         return state;
     }
@@ -21,12 +33,13 @@ const store = window.Redux.createStore(fingerVeinAppReducer);
 const { connect, Provider } = ReactRedux;
 
 const mapStateToProps = state => {
-    return { loggedIn: state.loggedIn };
+    return { loggedInId: state.loggedInId };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        logIn: loggedIn => dispatch(logIn(loggedIn))
+        logIn: (id) => dispatch(logIn(id)),
+        logOut: () => dispatch(logOut())
     };
 };
 
@@ -37,18 +50,36 @@ class ConnectedHeader extends React.Component {
     }
 
     handleClick(event) {
-        console.log('hihi');
-        this.props.logIn(!this.props.loggedIn);
+        if (typeof(this.props.loggedInId) === 'number') {      // 'id' should be number if logged in.
+            this.props.logOut();
+        } else {
+            const http = new XMLHttpRequest();
+            http.responseType = 'json';
+            http.onreadystatechange = () => {
+                if (http.readyState === 4 && http.status === 200) {
+                    if (typeof(http.response.verifiedTemplateNumber) === 'number') {
+                        this.props.logIn(http.response.verifiedTemplateNumber);
+                    }
+                    else {
+                        alert('Finger vein pattern not recognized.');
+                    }
+                }
+            };
+            http.open('GET', 'http://localhost:8080/api/verification_1toN');
+            http.send();
+        }
     }
 
     render() {
+        console.log(typeof(this.props.loggedInId));
+        console.log(this.props.loggedInId);
         return (
             <header>
                 <img id="logo" src="https://res.cloudinary.com/woooanet/image/upload/v1540199211/hitachi-fingervein-fe/hitachi-inspire-next-logo.png" />
                 <nav>
                     <ul>
-                        <li>Register</li>
-                        <li onClick={this.handleClick}>{ this.props.loggedIn ? 'Logout' : 'Login' }</li>
+                        <li>{ typeof(this.props.loggedInId) === 'number' ? 'Welcome, ' + this.props.loggedInId : 'Register' }</li>
+                        <li onClick={this.handleClick}>{ typeof(this.props.loggedInId) === 'number' ? 'Logout' : 'Login' }</li>
                     </ul>
                 </nav>
             </header>
