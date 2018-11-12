@@ -1,5 +1,6 @@
 'use strict';
 
+const FINGERVEINAPI = 'http://10.211.55.12:8080';
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 
@@ -65,7 +66,7 @@ class ConnectedHeader extends React.Component {
                     }
                 }
             };
-            http.open('GET', 'http://localhost:8080/api/verification_1toN');
+            http.open('GET', FINGERVEINAPI + '/api/verification_1toN');
             http.send();
         }
     }
